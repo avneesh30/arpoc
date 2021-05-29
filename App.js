@@ -11,12 +11,7 @@ var objArray = [
   require('./src/res/object_flowers/object_flowers.vrx'),
   require('./src/res/emoji_smile/emoji_smile.vrx')];
 
-
-
-
 export default class App extends React.PureComponent {
-
- 
 
   constructor() {
     super();
