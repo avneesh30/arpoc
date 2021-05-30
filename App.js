@@ -25,16 +25,13 @@ export default class App extends React.PureComponent {
     this._setARNavigatorRef = this._setARNavigatorRef.bind(this);
     this.requestWriteAccessPermission = this.requestWriteAccessPermission.bind(this);
     this._takeScreenshot = this._takeScreenshot.bind(this);
+    this.requestReadAccessPermission = this.requestReadAccessPermission.bind(this);
 
     this.DATA = [
       { text: 'Coffee Mug', onPress: () => this._onShowObject(0, "coffee_mug", 0) },
       { text: 'Flowers', onPress: () => this._onShowObject(1, "flowers", .290760) },
       { text: 'Smile Emoji', onPress: () => this._onShowObject(2, "smile_emoji", .497823) },
-      { text: 'Coffee Mug', onPress: () => this._onShowObject(0, "coffee_mug", 0) },
-      { text: 'Coffee Mug', onPress: () => this._onShowObject(0, "coffee_mug", 0) },
-      { text: 'Coffee Mug', onPress: () => this._onShowObject(0, "coffee_mug", 0) },
-      { text: 'Coffee Mug', onPress: () => this._onShowObject(0, "coffee_mug", 0) },
-      { text: 'Coffee Mug', onPress: () => this._onShowObject(0, "coffee_mug", 0) },
+      { text: 'Coffee Mug 2', onPress: () => this._onShowObject(0, "coffee_mug", 0) }
     ];
 
     this.state = {
@@ -97,12 +94,12 @@ export default class App extends React.PureComponent {
     }
   }
 
-  _takeScreenshot() {
+  async _takeScreenshot() {
     // check for write permissions, if not then request
     if (!this.state.writeAccessPermission) {
       this.requestWriteAccessPermission();
     }
-    this._arNavigator._takeScreenshot(`ARimage_${Math.floor(Date.now() / 1000)}_${this.state.screenshot_count}`, true).then((retDict) => {
+    await this._arNavigator._takeScreenshot(`ARimage_${Math.floor(Date.now() / 1000)}_${this.state.screenshot_count}`, true).then((retDict) => {
       if (retDict && !retDict.success) {
         Alert.alert("something went wrong please try again")
         return;
@@ -125,7 +122,7 @@ export default class App extends React.PureComponent {
       <View style={localStyles.outer} >
         <ViroARSceneNavigator
           style={localStyles.arView}
-          ref={this._setARNavigatorRef}
+          ref={(c)=> this._arNavigator = c }
           apiKey="YOUR API KEY"
           initialScene={{ scene: InitialARScene }}
           viroAppProps={this.state.viroAppProps}

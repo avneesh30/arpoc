@@ -98,7 +98,7 @@ var ARHitTestSample = createReactClass({
     },
 
     _setSpotLightRef(component) {
-        this.spotLight = component;
+      //  this.spotLight = component;
     },
 
     _onTrackInit() {
@@ -138,7 +138,7 @@ var ARHitTestSample = createReactClass({
         }
 
         this.arNodeRef.setNativeProps({ scale: newScale });
-        this.spotLight.setNativeProps({ shadowFarZ: 6 * newScale[0] });
+        //this.spotLight.setNativeProps({ shadowFarZ: 6 * newScale[0] });
     },
 
     _onLoadStart() {

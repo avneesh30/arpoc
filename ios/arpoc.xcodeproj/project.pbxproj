@@ -19,6 +19,7 @@
 		4527B138CFC194395D38CDE7 /* libPods-arpoc-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0146BCE77A653ABB60697AD /* libPods-arpoc-tvOS.a */; };
 		688992B011C4D36E8DDD25A6 /* libPods-arpoc-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA2D949FF342BFB83F1A9607 /* libPods-arpoc-tvOSTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		CFE38A3E2663900700F8ACD4 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFE38A3C2663900000F8ACD4 /* WebKit.framework */; };
 		FA0103849B8F233C57667633 /* libPods-arpoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF9D2D43BF71E7761582C30 /* libPods-arpoc.a */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		B0866DF2D9884DBC537DE9CF /* Pods-arpoc-arpocTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-arpoc-arpocTests.debug.xcconfig"; path = "Target Support Files/Pods-arpoc-arpocTests/Pods-arpoc-arpocTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BA2D949FF342BFB83F1A9607 /* libPods-arpoc-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-arpoc-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBA9EDDC4E0D719FA58332AE /* Pods-arpoc-arpocTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-arpoc-arpocTests.release.xcconfig"; path = "Target Support Files/Pods-arpoc-arpocTests/Pods-arpoc-arpocTests.release.xcconfig"; sourceTree = "<group>"; };
+		CFE38A3C2663900000F8ACD4 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		DFF9D2D43BF71E7761582C30 /* libPods-arpoc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-arpoc.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0146BCE77A653ABB60697AD /* libPods-arpoc-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-arpoc-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -82,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFE38A3E2663900700F8ACD4 /* WebKit.framework in Frameworks */,
 				FA0103849B8F233C57667633 /* libPods-arpoc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,6 +142,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CFE38A3C2663900000F8ACD4 /* WebKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				DFF9D2D43BF71E7761582C30 /* libPods-arpoc.a */,
@@ -293,11 +297,13 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = Q4Q2Q36CY8;
+						ProvisioningStyle = Manual;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = Q4Q2Q36CY8;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -652,6 +658,7 @@
 			baseConfigurationReference = B0866DF2D9884DBC537DE9CF /* Pods-arpoc-arpocTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = Q4Q2Q36CY8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -667,6 +674,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/arpoc.app/arpoc";
 			};
 			name = Debug;
@@ -676,6 +685,7 @@
 			baseConfigurationReference = CBA9EDDC4E0D719FA58332AE /* Pods-arpoc-arpocTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = Q4Q2Q36CY8;
 				INFOPLIST_FILE = arpocTests/Info.plist;
@@ -688,6 +698,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/arpoc.app/arpoc";
 			};
 			name = Release;
@@ -698,7 +710,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Q4Q2Q36CY8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = arpoc/Info.plist;
@@ -708,8 +722,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.poshanAtlas.devapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stigasoft.arpoc;
 				PRODUCT_NAME = arpoc;
+				PROVISIONING_PROFILE_SPECIFIER = "apron-pro";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -722,7 +737,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Q4Q2Q36CY8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = arpoc/Info.plist;
@@ -732,8 +749,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.poshanAtlas.devapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stigasoft.arpoc;
 				PRODUCT_NAME = arpoc;
+				PROVISIONING_PROFILE_SPECIFIER = "apron-pro";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -760,7 +778,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.arpoc-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stigasoft.arpoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -789,7 +807,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.arpoc-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stigasoft.arpoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
