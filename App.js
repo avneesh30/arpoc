@@ -100,8 +100,15 @@ export default class App extends React.PureComponent {
     // check for write permissions, if not then request
     if (!this.state.writeAccessPermission) {
       this.requestWriteAccessPermission();
-    }
-    await this._arNavigator._takeScreenshot(`ARimage_${Math.floor(Date.now() / 1000)}_${this.state.screenshot_count}`, true).then((retDict) => {
+    }else{
+			this._takeScreenshotAfterPermission();
+		}
+		
+  }
+
+	async _takeScreenshotAfterPermission(){			
+		
+		await this._arNavigator._takeScreenshot(`ARimage_${Math.floor(Date.now() / 1000)}_${this.state.screenshot_count}`, true).then((retDict) => {
       if (retDict && !retDict.success) {
         Alert.alert("something went wrong please try again")
         return;
@@ -115,7 +122,7 @@ export default class App extends React.PureComponent {
       });
       Alert.alert("Successfully saved image.")
     });
-  }
+	}
 
 	formatData = (data, numOfColumns) => {
 		const numberOfFullRows = Math.floor(data.length / numOfColumns);
@@ -128,6 +135,10 @@ export default class App extends React.PureComponent {
 		}
 		return data;
 	 }
+
+	componentDidMount(){
+		this.requestWriteAccessPermission();
+	} 
 
   render() {
     return (
