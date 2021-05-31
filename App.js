@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, ActivityIndicator, Text, View, Modal, TouchableOpacity, TouchableHighlight, Image, Alert, PermissionsAndroid, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, ActivityIndicator, Text, View, Modal, TouchableOpacity, TouchableHighlight, Image, Alert, PermissionsAndroid, FlatList, ScrollView, Platform } from 'react-native';
 import { ViroARSceneNavigator } from '@viro-community/react-viro';
 import colors from './src/constants/colors';
 
 import renderIf from './src/helpers/renderIf';
 var InitialARScene = require('./src/screen/ARHitTestSample');
+const isIos = Platform.OS == 'ios';
 
 // Array of 3d models that we use in this sample. This app switches between this these models.
 var objArray = [
@@ -97,8 +98,9 @@ export default class App extends React.PureComponent {
   }
 
   async _takeScreenshot() {
+   
     // check for write permissions, if not then request
-    if (!this.state.writeAccessPermission) {
+    if (!isIos && !this.state.writeAccessPermission) {
       this.requestWriteAccessPermission();
     }else{
 			this._takeScreenshotAfterPermission();
