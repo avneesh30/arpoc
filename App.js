@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ActivityIndicator, Text, View, Modal, TouchableOpacity, TouchableHighlight, Image, Alert, PermissionsAndroid, FlatList, ScrollView } from 'react-native';
 import { ViroARSceneNavigator } from '@viro-community/react-viro';
+import colors from './src/constants/colors';
 
 import renderIf from './src/helpers/renderIf';
 var InitialARScene = require('./src/screen/ARHitTestSample');
@@ -10,6 +11,7 @@ var objArray = [
   require('./src/res/coffee_mug/object_coffee_mug.vrx'),
   require('./src/res/object_flowers/object_flowers.vrx'),
   require('./src/res/emoji_smile/emoji_smile.vrx')];
+const numOfColumns = 2;
 
 export default class App extends React.PureComponent {
 
@@ -115,7 +117,17 @@ export default class App extends React.PureComponent {
     });
   }
 
-
+	formatData = (data, numOfColumns) => {
+		const numberOfFullRows = Math.floor(data.length / numOfColumns);
+	
+		let numberOfElementLastRow = data.length - (numberOfFullRows * numOfColumns);
+	
+		while (numberOfElementLastRow !== numOfColumns && numberOfElementLastRow !== 0) {
+		 data.push({ key: 'blank-' + { numberOfElementLastRow }, empty: true });
+		 numberOfElementLastRow = numberOfElementLastRow + 1;
+		}
+		return data;
+	 }
 
   render() {
     return (
@@ -144,18 +156,49 @@ export default class App extends React.PureComponent {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <ScrollView style={{ width: '100%' }}>
-                <FlatList data={this.DATA}
-                  renderItem={({ item, index, separators }) => (
-                    <View style={styles.item}>
-                      <TouchableOpacity onPress={() => {
-                        item.onPress()
-                        this.setState({ visible: false })
-                      }}>
-                        <Text style={styles.title}>{item.text}</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                  keyExtractor={item => item.id}
+                <FlatList 
+								  data={this.DATA}
+                  // data={this.formatData(this.DATA, numOfColumns)}
+									numColumns={numOfColumns}
+										renderItem={({ item, index, separators }) => (
+											<View
+												 style={[styles.itemContainer,{ 
+												marginLeft: index %2 ==0 ? 10 :5,
+												marginRight: index %2 ==0 ? 5 : 10,
+												marginTop: index <= numOfColumns-1 ? 10 : 0	}]}>
+											{/* <View style={styles.categoryItem}> */}
+											{/* <View style={styles.item}> */}
+
+												<TouchableOpacity onPress={() => {
+													item.onPress()
+													this.setState({ visible: false })
+												}}>
+													<View style={{flex: 1}}>													
+															<View style={styles.shadowContainer}>
+																<View style={styles.imageContainer}>
+																	<Image style={styles.imageContainer}																
+																		source={
+																			item.text === 'Coffee Mug' ?
+																			require("./src/res/img2.png")
+																			: item.text === 'Flowers' ?
+																			require("./src/res/img1.png")
+																			: item.text === 'Smile Emoji' ?
+																			require("./src/res/img3.png")
+																			:
+																			require("./src/res/img2.png")
+																		}
+																	/>
+																</View>
+															</View>
+	
+															<View style={styles.titleContainer}>
+																<Text style={styles.title}>{item.text}</Text>
+															</View>
+														</View>
+												</TouchableOpacity>
+											</View>
+											// </View>
+										)}
                 />
               </ScrollView>
             </View>
@@ -243,35 +286,43 @@ export default class App extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
-  item: {
+  itemContainer: {
     backgroundColor: "#eee",
+		flex: .5,
     marginVertical: 4,
     width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingHorizontal: 15
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#eee',
+    // paddingHorizontal: 15,
 
+		width: 120,
+		// height: 150,		
+		backgroundColor: colors.white,
+		borderRadius:5,
+		marginTop:5,
+		marginBottom: 10,
   },
   header: {
     fontSize: 32,
     backgroundColor: "#fff"
   },
-  title: {
-    fontSize: 24.8, paddingVertical: 15,
-  },
+  
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
+		width: '100%',
   },
   modalView: {
-    width: '80%',
-    height: 230,
-    backgroundColor: "white",
+    width: '85%',
+    height: 'auto',
+		marginTop: 10,
+		marginRight: 10,
+    backgroundColor: colors.greyBorderColor,
+    
     borderRadius: 5,
-    // paddingVertical: 0,
-    alignItems: "center",
+		alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -300,7 +351,49 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
-  }
+  },
+	categoryItem: {
+		// flex: 1,
+		width: 120,
+		height: 150,		
+		marginBottom: 10,
+		backgroundColor: colors.white,
+		borderRadius:5,
+		marginBottom: 10,
+	},
+	shadowContainer: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		// backgroundColor: '#f9f9f9',
+		justifyContent: 'center',
+		alignSelf: 'center',
+		borderRadius: 5,
+		height: 88,
+		width: 88,
+	},
+	imageContainer: {
+		height: 88,
+		width: 88,
+		resizeMode: 'contain',
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'center'
+	},
+	titleContainer: {
+		flex:1,
+		// position: 'absolute',
+		marginTop: 15,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'center'
+	},
+	title: {
+    fontSize: 18, 
+		paddingVertical: 5,
+		justifyContent: "center",
+    alignItems: "center",
+		alignSelf: 'center'
+  },	
 });
 
 var localStyles = StyleSheet.create({
@@ -320,7 +413,7 @@ var localStyles = StyleSheet.create({
     paddingBottom: 20,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor: '#00000000',
+    backgroundColor: '#00000000',    
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ffffff00',
