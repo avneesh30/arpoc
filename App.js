@@ -136,10 +136,6 @@ export default class App extends React.PureComponent {
 		return data;
 	 }
 
-	componentDidMount(){
-		this.requestWriteAccessPermission();
-	} 
-
   render() {
     return (
       <View style={localStyles.outer} >
