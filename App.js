@@ -25,9 +25,9 @@ export default class App extends React.PureComponent {
     this._onLoadStart = this._onLoadStart.bind(this);
     this._onLoadEnd = this._onLoadEnd.bind(this);
     this._setARNavigatorRef = this._setARNavigatorRef.bind(this);
-    this.requestWriteAccessPermission = this.requestWriteAccessPermission.bind(this);
+    // this.requestWriteAccessPermission = this.requestWriteAccessPermission.bind(this);
     this._takeScreenshot = this._takeScreenshot.bind(this);
-    this.requestReadAccessPermission = this.requestReadAccessPermission.bind(this);
+    // this.requestReadAccessPermission = this.requestReadAccessPermission.bind(this);
 
     this.DATA = [
       { text: 'Coffee Mug', onPress: () => this._onShowObject(0, "coffee_mug", 0) },
