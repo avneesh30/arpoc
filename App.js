@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, ActivityIndicator, Text, View, Modal, TouchableOpacity, TouchableHighlight, Image, Alert, PermissionsAndroid, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, ActivityIndicator, Text, View, Modal, TouchableOpacity, TouchableHighlight, Image, Alert, PermissionsAndroid, FlatList, ScrollView, Platform } from 'react-native';
 import { ViroARSceneNavigator } from '@viro-community/react-viro';
 import colors from './src/constants/colors';
+const isIos = Platform.OS == 'ios';
 
 import renderIf from './src/helpers/renderIf';
 var InitialARScene = require('./src/screen/ARHitTestSample');
@@ -17,9 +18,11 @@ export default class App extends React.PureComponent {
 
   constructor() {
     super();
-    this.initPerCamera();
-    this.initPerExternal();
-
+		if(!isIos){
+			this.initPerCamera();
+			this.initPerExternal();
+		}
+		
     this._onShowObject = this._onShowObject.bind(this);
     this._renderTrackingText = this._renderTrackingText.bind(this);
     this._onTrackingInit = this._onTrackingInit.bind(this);
@@ -163,7 +166,9 @@ export default class App extends React.PureComponent {
     if(writePermissionGranted){
       this._takeScreenshotAfterPermission();
     }else{
-      this.initPerCamera();
+			if(!isIos){
+				this.initPerCamera();
+			}
     }
 		
   }
