@@ -12,11 +12,13 @@ var objArray = [
   require('./src/res/object_flowers/object_flowers.vrx'),
   require('./src/res/emoji_smile/emoji_smile.vrx')];
 const numOfColumns = 2;
-
+let writePermissionGranted = false;
 export default class App extends React.PureComponent {
 
   constructor() {
     super();
+    this.initPerCamera();
+    this.initPerExternal();
 
     this._onShowObject = this._onShowObject.bind(this);
     this._renderTrackingText = this._renderTrackingText.bind(this);
@@ -44,6 +46,60 @@ export default class App extends React.PureComponent {
       screenshot_count: 0,
       visible: false
     }
+  }
+
+  async initPerCamera() {
+    // const resultCamera =  await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA);
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "Cool Photo App Camera Permission",
+          message:
+            "Cool Photo App needs access to your camera " +
+            "so you can take awesome pictures.",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const resultWriteExternal = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+        if (!resultWriteExternal) {
+          this.initPerExternal();
+        }
+        console.log("You can use the camera");
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+  async initPerExternal (){
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: "Cool Photo App write Permission",
+            message:
+              "Cool Photo App needs access to your write " +
+              "so you can write awesome pictures.",
+            buttonNeutral: "Ask Me Later",
+            buttonNegative: "Cancel",
+            buttonPositive: "OK"
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          writePermissionGranted = true;
+          // await this.setState({writeAccessPermission: true,});
+          console.log("You can use the WRITE_EXTERNAL_STORAGE");
+        } else {          
+          console.log("Camera permission denied");
+        }
+      } catch (err) {
+        console.warn(err);
+      }
   }
 
   _setARNavigatorRef(ARNavigator) {
@@ -98,11 +154,17 @@ export default class App extends React.PureComponent {
 
   async _takeScreenshot() {
     // check for write permissions, if not then request
-    if (!this.state.writeAccessPermission) {
-      this.requestWriteAccessPermission();
+    // if (!this.state.writeAccessPermission) {
+    //   this.requestWriteAccessPermission();
+    // }else{
+		// 	this._takeScreenshotAfterPermission();
+		// }
+
+    if(writePermissionGranted){
+      this._takeScreenshotAfterPermission();
     }else{
-			this._takeScreenshotAfterPermission();
-		}
+      this.initPerCamera();
+    }
 		
   }
 
